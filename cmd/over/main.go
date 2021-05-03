@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"raw.tools/over/cmd"
@@ -16,7 +15,6 @@ func init() {
 
 func main() {
 	if err := overCmd.Execute(); err != nil {
-		fmt.Println(err)
 		os.Exit(1)
 	}
 }

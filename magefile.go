@@ -84,13 +84,13 @@ func Clean() error {
 
 // Run the test suite
 func Test() error {
-	return runOK("gotest -race ./...", "Tests succeed", "Tests failed")
+	return runOK("go test -v -race ./...", "Tests succeed", "Tests failed")
 }
 
 // Run tests with coverage
 func Cover() error {
 	return runOK(
-		`gotest -race ./... -cover -covermode=atomic -coverprofile=coverage.out`,
+		`go test -race ./... -cover -covermode=atomic -coverprofile=coverage.out`,
 		"Tests (with coverage) succeed",
 		"Tests (with coverage) failed",
 	)
@@ -122,10 +122,7 @@ func Bench() error {
 
 // Compile code for the current platform
 func Build() error {
-	if err := runOK(`go build -v cmd/over/main.go`, `Build success`, `Build failed`); err != nil {
-		return err
-	}
-	return runOK(`go build -v cmd/git-over/main.go`, `Build success`, `Build failed`)
+	return runOK(`goreleaser build --snapshot --rm-dist --single-target`, `Build success`, `Build failed`)
 }
 
 // Build wk binary for all supported platforms

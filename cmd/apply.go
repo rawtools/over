@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/sami2020pro/gmoji"
 	"github.com/spf13/cobra"
 
 	over "raw.tools/over/pkg"
@@ -36,16 +37,23 @@ var ApplyCmd = &cobra.Command{
 			return err
 		}
 		msg := styles.White.Sprintf("Applying overlay %s", styles.WhiteItalic.Sprint(name))
-		fmt.Printf("📦 %s\n", msg)
+		fmt.Printf("\U0001f4e6 %s\n", msg)
 
 		repo := over.NewRepository(cfg)
 		overlay := repo.Get(name)
+		if overlay == nil {
+			return fmt.Errorf("Unable to find overlay '%s'", name)
+		}
 		err = overlay.Apply(target)
 		if err != nil {
 			return fmt.Errorf("Unable to apply overlay %s to %s:\n%w", overlay.Name, target, err)
 		}
-		msg = styles.White.Sprintf("Overlay %s applied with success", styles.WhiteItalic.Sprint(name))
-		fmt.Printf("✔ %s\n", msg)
+		fmt.Println(
+			gmoji.Check,
+			styles.White.Sprint("Overlay"),
+			styles.WhiteItalic.Sprint(name),
+			styles.White.Sprint("applied with success"),
+		)
 		return nil
 	},
 }

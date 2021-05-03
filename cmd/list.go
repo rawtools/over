@@ -24,9 +24,10 @@ import (
 
 // ListCmd represents the from command
 var ListCmd = &cobra.Command{
-	Use:   "list",
-	Short: "List known projects",
-	Long:  `List all known projects`,
+	Use:     "list",
+	Short:   "List known projects",
+	Long:    `List all known projects`,
+	Aliases: []string{"ls"},
 	RunE: func(cmd *cobra.Command, args []string) error {
 
 		cfg, err := Parse()

@@ -26,34 +26,32 @@ builds:
       - arm
       - arm64
     ignore:
-      - 
-        goos: openbsd
+      - goos: openbsd
         goarch: arm64
         # goarm: 6
     env:
       - CGO_ENABLED=0
     ldflags:
-       - -s -w
-       - -X pkg.Version={{.Version}}
-       - -X pkg.Commit={{.Commit}}
-       - -X pkg.Date={{.Date}}
-       - -X pkg.BuiltBy=goreleaser
-  - 
-    <<: *build
+      - -s -w
+      - -X pkg.Version={{.Version}}
+      - -X pkg.Commit={{.Commit}}
+      - -X pkg.Date={{.Date}}
+      - -X pkg.BuiltBy=goreleaser
+  - <<: *build
     id: git-over
     main: ./cmd/git-over/main.go
     binary: git-over
-    
+
 archives:
-- replacements:
-    darwin: Darwin
-    linux: Linux
-    windows: Windows
-    386: i386
-    amd64: x86_64
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
 
 checksum:
-  name_template: 'checksums.txt'
+  name_template: "checksums.txt"
 
 snapshot:
   name_template: "{{ .Tag }}-dev"
@@ -62,5 +60,5 @@ changelog:
   sort: asc
   filters:
     exclude:
-    - '^docs:'
-    - '^test:'
+      - "^docs:"
+      - "^test:"

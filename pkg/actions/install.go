@@ -1,4 +1,4 @@
-package steps
+package actions
 
 import (
 	"os/exec"

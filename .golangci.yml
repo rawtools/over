@@ -55,7 +55,6 @@ run:
   # If false (default) - golangci-lint acquires file lock on start.
   allow-parallel-runners: true
 
-
 # output configuration options
 # output:
 #   # colored-line-number|line-number|json|tab|checkstyle|code-climate, default is "colored-line-number"
@@ -70,11 +69,9 @@ run:
 #   # make issues output unique by line, default is true
 #   uniq-by-line: true
 
-
 linters:
   enable:
     - golint
-
 
 # all available settings of specific linters
 linters-settings:

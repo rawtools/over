@@ -42,12 +42,12 @@ func TestOverlays(t *testing.T) {
 
 				base, err := filepath.Rel(target, path)
 				require.NoError(err)
-				src := filepath.Join(target, base)
+				src := filepath.Join(expectations, base)
 
 				if info.IsDir() {
-					assert.DirExists(src)
+					assert.DirExists(src, `Found extra directory %s`, src)
 				} else {
-					assert.FileExists(src)
+					assert.FileExists(src, `Found extra file %s`, src)
 				}
 				return nil
 			}))
@@ -55,17 +55,17 @@ func TestOverlays(t *testing.T) {
 	})
 }
 
-func TestOverlayErrors(t *testing.T) {
-	tu.ForEachOverlay(t, "errors", func(t *testing.T, overlay *over.Overlay) {
-		name := overlay.Name
-		tpl := filepath.Join(tu.TestData, "targets", name)
-		tu.WithTempCopy(t, tpl, func(target string) {
-			require := require.New(t)
+// func TestOverlayErrors(t *testing.T) {
+// 	tu.ForEachOverlay(t, "errors", func(t *testing.T, overlay *over.Overlay) {
+// 		name := overlay.Name
+// 		tpl := filepath.Join(tu.TestData, "targets", name)
+// 		tu.WithTempCopy(t, tpl, func(target string) {
+// 			require := require.New(t)
 
-			require.Error(overlay.Apply(target))
-		})
-	})
-}
+// 			require.Error(overlay.Apply(target))
+// 		})
+// 	})
+// }
 
 // func TestExpressions(t *testing.T) {
 // 	root := "./testData/expressions"

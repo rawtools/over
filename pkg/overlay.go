@@ -3,14 +3,13 @@ package pkg
 import (
 	"fmt"
 	"io/fs"
-	"os"
 	"path/filepath"
 
 	"github.com/milad-abbasi/gonfig"
 	"github.com/pkg/errors"
 
+	"raw.tools/over/pkg/actions"
 	"raw.tools/over/pkg/plan"
-	"raw.tools/over/pkg/steps"
 	"raw.tools/over/pkg/styles"
 )
 
@@ -92,25 +91,15 @@ func (o *Overlay) PlanExecution(target string, opts *plan.ExecuteOptions) (*plan
 		if err != nil {
 			return err
 		}
+		if base == "over.yaml" {
+			return nil
+		}
 		targetLn := filepath.Join(target, base)
 
 		if info.IsDir() {
-			if _, err := os.Stat(targetLn); os.IsNotExist(err) {
-				p.Add(&steps.MkDir{
-					Path: targetLn,
-					Mode: info.Mode(),
-				})
-			}
+			p.Add(actions.EnsureDirectory(targetLn, info.Mode()))
 		} else {
-			step := &steps.Symlink{
-				Source: path,
-				Target: targetLn,
-			}
-			if _, err := os.Stat(targetLn); os.IsNotExist(err) {
-				p.Add(step)
-			} else {
-				p.Add(&plan.Skip{Step: step})
-			}
+			p.Add(actions.EnsureLink(path, targetLn))
 		}
 		return nil
 	})

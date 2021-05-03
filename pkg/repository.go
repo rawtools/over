@@ -47,13 +47,18 @@ func (r *Repository) List() []*Overlay {
 	return overlays
 }
 
-func (r *Repository) Get(overlay string) *Overlay {
+func (r *Repository) Get(name string) *Overlay {
 	if r.Overlays == nil {
 		if err := r.parseOverlays(); err != nil {
 			return nil
 		}
 	}
-	return r.Overlays[overlay]
+
+	overlay, exists := r.Overlays[name]
+	if !exists {
+		return nil
+	}
+	return overlay
 }
 
 // New create a new overlay into the repository
