@@ -1,12 +1,12 @@
 package pkg
 
 import (
+	"errors"
 	"fmt"
 	"io/fs"
 	"path/filepath"
 
 	"github.com/milad-abbasi/gonfig"
-	"github.com/pkg/errors"
 
 	"raw.tools/over/pkg/actions"
 	"raw.tools/over/pkg/plan"

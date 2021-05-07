@@ -3,8 +3,6 @@ package plan
 import (
 	"fmt"
 	"strings"
-
-	"github.com/pkg/errors"
 )
 
 type Step interface {
@@ -33,7 +31,7 @@ func (s *Steps) Execute(opts *ExecuteOptions) error {
 	for _, step := range s.steps {
 		fmt.Println(step)
 		if err := step.Execute(opts); err != nil {
-			return errors.Wrapf(err, "Error while executing step %s", step)
+			return fmt.Errorf("Error while executing step %s: %w", step, err)
 		}
 	}
 	return nil

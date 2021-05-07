@@ -3,7 +3,6 @@ package pkg
 import (
 	"fmt"
 
-	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 )
 
@@ -41,11 +40,11 @@ func NewConfig(parser *viper.Viper) (*Config, error) {
 	var config Config
 
 	if err := parser.ReadInConfig(); err != nil {
-		return nil, errors.Wrap(err, "unable to read config")
+		return nil, fmt.Errorf("unable to read config: %w", err)
 	}
 
 	if err := parser.Unmarshal(&config); err != nil {
-		return nil, errors.Wrap(err, "config unmarshalling failed")
+		return nil, fmt.Errorf("config unmarshalling failed: %w", err)
 	}
 
 	return &config, nil

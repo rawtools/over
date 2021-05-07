@@ -6,7 +6,6 @@ import (
 	"path/filepath"
 
 	"github.com/adrg/xdg"
-	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -68,7 +67,7 @@ func Parse() (*over.Config, error) {
 	}
 
 	if err := parser.Unmarshal(&config); err != nil {
-		return nil, errors.Wrap(err, "config unmarshalling failed")
+		return nil, fmt.Errorf("config unmarshalling failed: %w", err)
 	}
 
 	return &config, nil
