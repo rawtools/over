@@ -132,7 +132,7 @@ func BuildAll() error {
 
 // Perform a release
 func Release() error {
-	return runOK(`goreleaser --rm-dist`, `wk released`, `Release failed`)
+	return runOK(`goreleaser --rm-dist`, `over released :rocket:`, `Release failed`)
 }
 
 // Lint, Build, Test

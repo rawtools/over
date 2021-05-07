@@ -29,7 +29,10 @@ func TestOverlays(t *testing.T) {
 				require.NoError(err)
 				fullTarget := filepath.Join(target, base)
 
-				if info.IsDir() {
+				if info.Name() == ".gitkeep" {
+					// Ignore, only here to allow empty dirs in git
+					return nil
+				} else if info.IsDir() {
 					assert.DirExists(fullTarget)
 				} else {
 					assert.FileExists(fullTarget)

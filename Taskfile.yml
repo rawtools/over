@@ -1,0 +1,87 @@
+# https://taskfile.dev
+version: "3"
+
+vars:
+  GIT_COMMIT:
+    sh: git log -n 1 --format=%h
+
+  GO_PACKAGES:
+    sh: go list ./...
+
+env:
+  CGO_ENABLED: 1
+  PKG_NAME: over
+
+tasks:
+  default:
+    cmds:
+      - task: lint
+      - task: test
+      - task: build-all
+
+  clean:
+    desc: Cleans temp files and folders
+    cmds:
+      - go clean
+      - rm -rf dist/
+
+  test:
+    desc: Runs test suite
+    cmds:
+      - go test -v -race ./...
+
+  cover:
+    desc: Runs test suite with coverage
+    cmds:
+      - go test -v -race ./... -cover -covermode=atomic -coverprofile=coverage.out
+
+  cover-html:
+    desc: Runs test suite with coverage and HTML PKGrt
+    deps:
+      - cover
+    cmds:
+      - go tool cover -html=coverage.out -o coverage.html
+
+  lint:
+    desc: Runs golangci-lint
+    cmds:
+      - golangci-lint run
+    silent: true
+
+  build:
+    desc: Compile for the current platform
+    cmds:
+      - goreleaser build --snapshot --rm-dist --single-target
+
+  build-all:
+    desc: Compile for all supported platforms
+    cmds:
+      - goreleaser build --snapshot --rm-dist
+
+  release:
+    desc: Perform a release
+    cmds:
+      - goreleaser build --rm-dist
+
+  mod:
+    desc: Downloads and tidy Go modules
+    cmds:
+      - go mod download
+      - go mod tidy
+
+  tools:
+    desc: Downloads required tools (prefer OS install)
+    cmds:
+      - task: go-get
+        vars:
+          PKG: github.com/golangci/golangci-lint
+      - task: go-get
+        vars:
+          PKG: github.com/goreleaser/goreleaser
+
+  go-get: go get -u {{.PKG}}
+
+  packages:
+    cmds:
+      - echo '{{.GO_PACKAGES}}'
+    silent: true
