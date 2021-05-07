@@ -29,6 +29,8 @@ builds:
       - goos: openbsd
         goarch: arm64
         # goarm: 6
+      - goos: darwin
+        goarch: arm64
     env:
       - CGO_ENABLED=0
     ldflags:
