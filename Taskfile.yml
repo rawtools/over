@@ -12,6 +12,9 @@ env:
   CGO_ENABLED: 1
   PKG_NAME: over
 
+includes:
+  install: Taskfile.install.yml
+
 tasks:
   default:
     cmds:
@@ -68,28 +71,6 @@ tasks:
     cmds:
       - go mod download
       - go mod tidy
-
-  install-tools:
-    desc: Downloads required tools (prefer OS install)
-    cmds:
-      - task: install-golangci-lint
-      - task: install-goreleaser
-
-  install-golangci-lint:
-    desc: Install golangci-lint
-    cmds:
-      - task: go-get
-        vars:
-          PKG: github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-
-  install-goreleaser:
-    desc: Install goreleaser
-    cmds:
-      - task: go-get
-        vars:
-          PKG: github.com/goreleaser/goreleaser
-
-  go-get: go get -u {{.PKG}}
 
   packages:
     cmds:

@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-python@v2
       - uses: Arduino/actions/setup-taskfile@master
       - name: Install golangci-lint
-        run: task install-golangci-lint
+        run: task install:golangci-lint
       - uses: pre-commit/action@v2.0.2
 
   test:

@@ -1,0 +1,25 @@
+# https://taskfile.dev
+version: "3"
+
+tasks:
+  tools:
+    desc: Downloads required tools (prefer OS install)
+    cmds:
+      - task: golangci-lint
+      - task: goreleaser
+
+  golangci-lint:
+    desc: Install golangci-lint
+    cmds:
+      - task: go-get
+        vars:
+          PKG: github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+
+  goreleaser:
+    desc: Install goreleaser
+    cmds:
+      - task: go-get
+        vars:
+          PKG: github.com/goreleaser/goreleaser
+
+  go-get: go get -u {{.PKG}}
