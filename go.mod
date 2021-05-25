@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/adrg/xdg v0.3.3
 	github.com/bmatcuk/doublestar/v2 v2.0.4
-	github.com/fatih/color v1.10.0
+	github.com/fatih/color v1.12.0
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/logrusorgru/aurora v2.0.3+incompatible
